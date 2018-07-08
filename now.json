@@ -1,6 +1,7 @@
 {
-  "regions": ["sfo1"],
   "env": {
+    "SMTP_USERNAME": "@smtp-username",
+    "SMTP_PASSWORD": "@smtp-password",
     "RESCUE_TIME_TOKEN": "@rescuetime-token-secret"
   }
 }
