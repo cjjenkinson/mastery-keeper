@@ -1,0 +1,6 @@
+{
+  "regions": ["sfo1"],
+  "env": {
+    "RESCUE_TIME_TOKEN": "@rescuetime-token-secret"
+  }
+}
