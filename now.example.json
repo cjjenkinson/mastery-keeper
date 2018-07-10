@@ -2,7 +2,7 @@
   "env": {
     "SMTP_USERNAME": "camjenkinson@gmail.com",
     "SMTP_PASSWORD": "BFqWAEvCi3sc",
-    "RESCUE_TIME_TOKEN": "B63lrYIasOZ8hVWQ9eEhmWGeDv7OlX4e8zgfdo9g",
+    "RESCUE_TIME_TOKEN": "secret-token",
     "RESCUE_TIME_CATEGORY": "software_development_hours",
     "GOAL_TITLE": "Software Engineering",
     "GOAL_TARGET": "10000",
