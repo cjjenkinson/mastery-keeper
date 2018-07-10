@@ -1,24 +1,19 @@
+require('now-env');
 import joi from 'joi';
 
 const envVarsSchema = joi
   .object({
-    SMTP_USERNAME: joi
-      .string()
-      .required(),
+    SMTP_USERNAME: joi.string().required(),
     SMTP_PASSWORD: joi.string().required(),
     RESCUE_TIME_TOKEN: joi.string().required(),
     RESCUE_TIME_CATEGORY: joi
       .string()
       .required()
       .default('software_development_hours'),
-    GOAL_TITLE: joi
-      .string()
-      .required(),
+    GOAL_TITLE: joi.string().required(),
     GOAL_TARGET: joi.number().default(10000),
     GOAL_EXISTING_PROGRESS: joi.number().default(0),
-    USERNAME: joi
-      .string()
-      .required(),
+    USERNAME: joi.string().required(),
     EMAIL: joi
       .string()
       .email()
