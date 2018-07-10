@@ -1,16 +1,16 @@
 export default {
-  createDailyLogInsights: data => {
-    const percentageDifference = getPercentageDifference(
+  createLogInsights: data => {
+    const percentageDifference = calcPercentageDifference(
       data.difference.previous,
       data.difference.current
     );
 
-    const percentageCompletion = getPercentageCompletion(
+    const percentageCompletion = calcPercentageCompletion(
       data.completion.currentProgress,
       data.completion.target
     );
 
-    const timeToCompletion = getTimeToCompletion(
+    const timeToCompletion = calcTimeToCompletion(
       data.completion.dailyAverage,
       data.completion.progressDifference,
       data.completion.multiplier
@@ -26,8 +26,7 @@ export default {
   },
 };
 
-
-const getPercentageDifference = (previous, current) => {
+const calcPercentageDifference = (previous, current) => {
   // validation
   const decreaseValue = previous - current;
   const difference = (decreaseValue / previous) * 100;
@@ -35,13 +34,13 @@ const getPercentageDifference = (previous, current) => {
   return difference.toFixed(2) + '%';
 };
 
-const getPercentageCompletion = (currentProgress, target) => {
+const calcPercentageCompletion = (currentProgress, target) => {
   // validation
   const percentageCompletion = (currentProgress / target) * 100;
   return percentageCompletion.toFixed(2) + '%';
 };
 
-const getTimeToCompletion = (dailyAverage, difference, multiplier = 1) => {
+const calcTimeToCompletion = (dailyAverage, difference, multiplier = 1) => {
   // validation
   const averageFromMultiplier = dailyAverage * multiplier;
   const days = Math.round(difference / averageFromMultiplier);
