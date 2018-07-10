@@ -5,3 +5,4 @@ node_modules
 build
 .envnode_modules/
 now-secrets.json
+.vscode
