@@ -3,6 +3,6 @@ yarn-error.log
 yarn.lock
 node_modules
 build
-.envnode_modules/
 now-secrets.json
+.envnode_modules/
 .vscode
