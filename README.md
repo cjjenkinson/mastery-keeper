@@ -10,6 +10,9 @@ Mastery Keeper is a personal reporting app that keeps you focused on a long term
 
 The report looks like this:
 
+<div align="center">
+  <img src="https://github.com/cjjenkinson/masterykeeper/blob/beta-release-1.0.0/report.png?raw=true" />
+</div>
 
 ### Why?
 
