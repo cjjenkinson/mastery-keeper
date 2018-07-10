@@ -2,6 +2,13 @@
   "env": {
     "SMTP_USERNAME": "@smtp-username",
     "SMTP_PASSWORD": "@smtp-password",
-    "RESCUE_TIME_TOKEN": "@rescuetime-token-secret"
+    "RESCUE_TIME_TOKEN": "@rescuetime-token-secret",
+    "RESCUE_TIME_CATEGORY": "@rescuetime-category",
+    "GOAL_TITLE": "@goal-title",
+    "GOAL_TARGET": "@goal-target",
+    "GOAL_EXISTING_PROGRESS": "@goal-existing-progress",
+    "USERNAME": "@username",
+    "EMAIL": "@email",
+    "TIMEZONE": "@timezone"
   }
 }
