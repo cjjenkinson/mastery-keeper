@@ -8,7 +8,11 @@ Daily reports on your progress towards 10,000 hours of skill mastery 🎩
 
 Mastery Keeper is a personal reporting app that keeps you focused on a long term path of skill mastery. 
 
-Mastery Keeper keeps track of the total amount of hours practiced towards your target goal such as 10,000 hours. Mastery Keeper will collect the time logs from Rescue Time a service that automatically tracks time spent on specific activities like Software Engineering. Every morning your Keeper will head out and fetch how many hours you practiced the day before and will then create some useful insights about your progress nicely packaged up in a report sent to you via email.
+Mastery Keeper tracksthe total amount of hours practiced towards a target practice goal such as 10,000 hours. 
+
+Mastery Keeper will use the time logs from Rescue Time a service which automatically tracks time spent on specific activities like Software Engineering meaning all logs are accurate and reliable. 
+
+Every morning your Keeper will head out and get the logs from the day before and will create some useful insights on your progress before packaging it all up in a report sent to you via email.
 
 The daily progress report looks like this:
 
