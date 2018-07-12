@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/cjjenkinson/masterykeeper.svg?branch=master)](https://travis-ci.org/cjjenkinson/masterykeeper)
 
-# Mastery Keeper
-
-Daily reports on your progress towards 10,000 hours of skill mastery 🎩
+<div align="center">
+  <img src="https://github.com/cjjenkinson/masterykeeper/blob/develop/logo.png?raw=true" width="160px" />
+  <h3>Mastery Keeper</h3>
+  <h5>Daily reports on your progress towards 10,000 hours of skill mastery 🎩</h5>
+</div>
 
 ### What is Mastery Keeper?
 
@@ -130,6 +132,10 @@ check-coverage
 
 #### TODO
 
+- Add frontend profile dashboard
+- Add goal and account config in frontend
+- Move from lowdb to something more robust such as MongoDB / Postgres
+- First time setup with RescueTime be able to pull in past summaries up to one month to pre-populate logs avoiding a cold start
 - Refactor keeper.createReport
 - Refactor start
 - Add joi schema validation for models
@@ -138,11 +144,15 @@ check-coverage
 - Add worker stats / reports as server routes
 - Add frontend dashboard to display progress
 - Back up logs after every report
+- Add welcome email on first time setup
+- Add weekly, monthl summary emails
+- Add multiple time tracking sources (Toggle, spreadsheets etc)
 - Add welcome email
 - Add weekly summary
 - Explore multiple time tracking sources (toggl, spreadsheets etc)
 - Multiple goal tracking
-- Enhance insights: best time, best month, difference between days, weeks etc
+- Enhance insights: best day of the week, difference between days, weeks etc
 - Review deployment process
+- Marketing / documentation website
 
 Cameron Jenkinson - camjenkinson@gmail.com
