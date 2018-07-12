@@ -1,0 +1,32 @@
+{
+  "logs": [
+    {
+      "id": "264ce810-844e-11e8-89c5-d39166fbf7e7",
+      "createdAt": 1531233181973,
+      "logDate": "2018-07-11",
+      "hoursRaw": 5.49
+    },
+    {
+      "id": "264ce810-844e-11e8-89c5-d39166fbf7e6",
+      "createdAt": 1531233181973,
+      "logDate": "2018-07-10",
+      "hoursRaw": 2.49
+    },
+    {
+      "id": "264ce810-844e-11e8-89c5-d39166fbf7e5",
+      "createdAt": 1531233181971,
+      "logDate": "2018-07-09",
+      "hoursRaw": 3.49
+    }
+  ],
+  "user": {
+    "username": "Cameron Jenkinson",
+    "email": "camjenkinson@gmail.com",
+    "timezone": "Europe/London",
+    "goal": {
+      "title": "Software Engineering",
+      "target": 10000,
+      "progress": 600
+    }
+  }
+}
