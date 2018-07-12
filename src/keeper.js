@@ -1,5 +1,3 @@
-const debug = require('debug')('keeper:worker');
-
 import cron from 'cron';
 import axios from 'axios';
 import uuidv1 from 'uuid/v1';
@@ -7,6 +5,8 @@ import uuidv1 from 'uuid/v1';
 import utils from './utils';
 import insights from './insights';
 import email from './email';
+
+const debug = require('debug')('keeper:worker');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -26,7 +26,6 @@ class Keeper {
     const hasLogs = db.has('logs').value();
 
     if (!hasLogs) {
-
       // Setup DB with defaults
       db.defaults({
         logs: [],
@@ -49,37 +48,51 @@ class Keeper {
   }
 
   async getDailySummary() {
-    const url = `https://www.rescuetime.com/anapi/daily_summary_feed?key=${
-      this.rescuetimeKey
-    }`;
+    const url = `https://www.rescuetime.com/anapi/daily_summary_feed?key=${this.rescuetimeKey}`;
     const dailySummary = await axios.get(url);
     return dailySummary;
+  }
+
+  getUser() {
+    const logs = db.get('logs').value();
+    const user = db.get('user').value();
+
+    return {
+      logs,
+      user,
+    };
+  }
+
+  async addLog(logData) {
+    // Check for unique logs from date
+    const log = await db
+      .get('logs')
+      .push(logData)
+      .write()
+      .value();
+
+    return log;
   }
 
   async createReport() {
     const dailySummary = await this.getDailySummary();
 
-    const logData = dailySummary.data[0];
+    const logfromSummary = dailySummary.data[0];
 
-    if (!logData) {
-      throw new Error(
-        'Log data could not be retrieved, please check the Rescue Time service.'
-      );
+    if (!logfromSummary) {
+      throw new Error('Log data could not be retrieved, please check the Rescue Time service.');
     }
 
-    const log = {
+    const logData = {
       id: uuidv1(),
       createdAt: Date.now(),
-      logDate: logData.date,
-      hoursRaw: logData.software_development_hours,
+      logDate: logfromSummary.date,
+      hoursRaw: logfromSummary.software_development_hours,
     };
 
-    const { logDate, hoursRaw } = log;
+    const log = await this.addLog(logData);
 
-    // Check for unique logs from date
-    db.get('logs')
-      .push(log)
-      .write();
+    const { logDate, hoursRaw } = log;
 
     const user = db.get('user').value();
 
@@ -98,7 +111,7 @@ class Keeper {
 
     db.set('user.goal.progress', updatedProgress).write();
 
-    const insightsData = await insights.createLogInsights({
+    const insightsRaw = {
       difference: {
         previous: 2.0, // hours from last log
         current: hoursRaw,
@@ -110,13 +123,11 @@ class Keeper {
         progressDifference,
         multiplier: 1,
       },
-    });
+    };
 
-    const {
-      percentageDifference,
-      percentageCompletion,
-      timeToCompletion,
-    } = insightsData;
+    const insightsData = await insights.getLogInsights(insightsRaw);
+
+    const { percentageDifference, percentageCompletion, timeToCompletion } = insightsData;
 
     const hoursFormatted = utils.formatRawHours(log.hoursRaw);
     const dailyAverageFormatted = utils.formatRawHours(dailyAverage);
@@ -143,7 +154,7 @@ class Keeper {
 
   async sendReport() {
     const reportData = await this.createReport();
-    const html = email.createHtmlTemplate(reportData);
+    const html = await email.createHtmlTemplate(reportData);
 
     const mailOptions = {
       user: { email: this.user.email },
@@ -154,20 +165,10 @@ class Keeper {
     email.send(mailOptions);
   }
 
-  getUser() {
-    const logs = db.get('logs').value();
-    const user = db.get('user').value();
-
-    return {
-      logs,
-      user,
-    };
-  }
-
   processDailyReport() {
     const processDailyReportWorker = new cron.CronJob({
       cronTime: '10 6 * * *',
-      onTick: async() => {
+      onTick: async () => {
         /*
         * Runs every day at 6:10 AM
         * '10 6 * * *'
@@ -175,14 +176,13 @@ class Keeper {
         try {
           await this.sendReport();
           debug('> Report succesfully processed and sent');
+          /* eslint-disable no-console */
+          console.log('> Report succesfully processed and sent');
         } catch (err) {
+          /* eslint-disable no-console */
           console.error(`> Error in processing daily report: ${err.message}`);
           processDailyReportWorker.stop();
-          debug(
-            `> [processDailyReport] worker status: ${
-              processDailyReportWorker.running
-            }`
-          );
+          debug(`> [processDailyReport] worker status: ${processDailyReportWorker.running}`);
         }
       },
       start: false,
@@ -191,11 +191,7 @@ class Keeper {
 
     // start the worker
     processDailyReportWorker.start();
-    debug(
-      `> [processDailyReport] worker status: ${
-        processDailyReportWorker.running
-      }`
-    );
+    debug(`> [processDailyReport] worker status: ${processDailyReportWorker.running}`);
   }
 }
 
