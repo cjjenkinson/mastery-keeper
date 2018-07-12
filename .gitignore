@@ -2,5 +2,9 @@ DS_Store
 yarn-error.log
 yarn.lock
 node_modules
+coverage
+.nyc_output
 build
-.env
+now-secrets.json
+.envnode_modules/
+.vscode
