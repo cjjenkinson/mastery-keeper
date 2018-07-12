@@ -1,7 +1,7 @@
+import nodemailer from 'nodemailer';
+
 require('now-env');
 const debug = require('debug')('keeper:email');
-
-import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
   host: 'mail.smtp2go.com',
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export default {
-  send: options => {
+  send: (options) => {
     const mailOptions = {
       from: '"Mastery Keeper" <keeper@masterykeeper.com>',
       to: options.user.email,
@@ -23,23 +23,22 @@ export default {
 
     transporter
       .sendMail(mailOptions)
-      .then(info => {
+      .then((info) => {
         debug(`> Email sent: ${info.messageId}`);
         return info;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   },
 
-  createHtmlTemplate: reportData => {
+  createHtmlTemplate: (reportData) => {
     const html = template(reportData);
     return html;
   },
 };
 
-const template = data => {
-  return `
+const template = data => `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
@@ -406,15 +405,23 @@ const template = data => {
                           <p class="emoji large">👋</p>
                           <p><b>Daily Mastery Report: ${data.logDate}</b></p>
                           <p>Hi ${data.username}</p>
-                          <p>Yesterday you practiced for ${data.hoursFormatted} (${data.percentageDifference})</p>
+                          <p>Yesterday you practiced for ${data.hoursFormatted} (${
+  data.percentageDifference
+})</p>
 
                           <h4>🏆 ${data.target} hours of ${data.title} practice</h4>
                           <p>✅ In total you've practiced for ${data.progress} hours</p>
-                          <p>⚡️ You are ${data.progressDifference} hours away from your goal of ${data.target} hours (${data.percentageCompletion})</p>
+                          <p>⚡️ You are ${data.progressDifference} hours away from your goal of ${
+  data.target
+} hours (${data.percentageCompletion})</p>
 
                           <h4>Insights</h4>
                           <p>⏰ Your daily average is ${data.dailyAverageFormatted} per day</p>
-                          <p>🚀 Maintain this average and achieve your goal in ${data.completionTimeDays} days (${data.completionTimeMonths} months, ${data.completionTimeYears} years) </p>
+                          <p>🚀 Maintain this average and achieve your goal in ${
+  data.completionTimeDays
+} days (${data.completionTimeMonths} months, ${
+  data.completionTimeYears
+} years) </p>
 
                           <p>Well done, Keep it up!</p>
                           <p>Mastery Keeper</p>
@@ -442,4 +449,3 @@ const template = data => {
         </table>
       </body>
     </html>`;
-};

@@ -1,5 +1,6 @@
-require('now-env');
 import joi from 'joi';
+
+require('now-env');
 
 const envVarsSchema = joi
   .object({
