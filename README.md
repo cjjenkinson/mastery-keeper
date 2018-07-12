@@ -17,7 +17,7 @@ Every morning your Keeper will head out and get the logs from the day before and
 The daily progress report looks like this:
 
 <div align="center">
-  <img src="https://github.com/cjjenkinson/masterykeeper/blob/beta-release-1.0.0/report.png?raw=true" />
+  <img src="https://github.com/cjjenkinson/masterykeeper/blob/master/report.png?raw=true" />
 </div>
 
 Check out my logs and progress here: https://masterykeeper-wshpiesdrp.now.sh
