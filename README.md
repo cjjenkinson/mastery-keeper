@@ -38,21 +38,59 @@ Then follow these three steps:
 
 #### 1. Rescue Time API Key
 
-https://www.rescuetime.com/anapi/manage
+If you're already using Rescue Time access the API management console through this [link](https://www.rescuetime.com/anapi/manage). 
+
+Create an API key and name it Mastery Keeper when prompted.
+
+If you are not using Rescue Time please sign up, download the desktop app, configure your settings and ensure you've added a days worth of activities before setting up Mastery Keeper. This is because Rescue Time will need to understand how to categories the time spent on your computer before adding it to specific categories such as 'software engineering'.
+
+Once you've got a couple of days worth of time on the 'software engineering' category return to deploy your keeper. Also, make sure have configured and labelled what counts as practice such as using your editor, github, stackoverflow or reading specific books this is completely up to you.
 
 #### 2. Define Keeper settings
 
-Timezone: http://momentjs.com/timezone/
+After succesfully obtaining a Rescue Time API key and cloning the repository it is time to configure your Keeper's settings.
+
+First copy the ```now.example.json``` into ```now.json``` with the env variables defined.
+
+These are my settings with the Rescue Time token omitted.
+
+```javascript
+{
+  "env": {
+    "SMTP_USERNAME": "camjenkinson@gmail.com",
+    "SMTP_PASSWORD": "BFqWAEvCi3sc",
+    "RESCUE_TIME_TOKEN": "secret-token",
+    "RESCUE_TIME_CATEGORY": "software_development_hours",
+    "GOAL_TITLE": "Software Engineering",
+    "GOAL_TARGET": "10000",
+    "GOAL_EXISTING_PROGRESS": "600",
+    "USERNAME": "Cameron Jenkinson",
+    "EMAIL": "camjenkinson@gmail.com",
+    "TIMEZONE": "Europe/London"
+  }
+}
+```
+
+- Update the token with the token you obtained from the Rescue Time API management console.
+- Add the category that you're basing your skill practice on such as software engineering, this should be the category returned from Rescue Time
+- Add a readable title which is used on the daily reports
+- Add the goal target, by default this is 10,000 hours
+- Add any existing progress you've tracked elsewhere, by default this will start at 0
+- Add your full name as the username
+- Your email address where the reports are sent to
+- Your timezone for the cron-job to execute correctly, use the Moment notation found [here](http://momentjs.com/timezone/)
+
+Keeper will throw a configuration error if you don't define all of the settings up-front.
 
 #### 3. Deploy with now
 
-In the root of the directory
+Once you've added your configuration opptions from the root of the directory run:
 
 ```bash
 now
 ```
 
-Copy the deployed URL and run the now scale command
+Once deployed copy the deployed URL and run the now scale command:
 
 ```bash
 now scale https://my-app-replacethis.now.sh 1
@@ -93,15 +131,16 @@ check-coverage
 #### TODO
 
 - Refactor keeper.createReport
-- Refactor start & init
-- Add joi schema validation for logs
+- Refactor start
+- Add joi schema validation for models
 - Unique check for avoiding duplicate logs on the same log date
 - Configure email delivery time (via cron-job syntax)
 - Add worker stats / reports as server routes
+- Add frontend dashboard to display progress
 - Back up logs after every report
 - Add welcome email
 - Add weekly summary
-- Explore multiple time tracking sources (Toggle, spreadsheets etc)
+- Explore multiple time tracking sources (toggl, spreadsheets etc)
 - Multiple goal tracking
 - Enhance insights: best time, best month, difference between days, weeks etc
 - Review deployment process
