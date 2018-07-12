@@ -132,7 +132,7 @@ check-coverage
 
 #### TODO
 
-- Add frontend profile dashboard
+- Add frontend profile snapshot (see design below)
 - Add goal and account config in frontend
 - Move from lowdb to something more robust such as MongoDB / Postgres
 - First time setup with RescueTime be able to pull in past summaries up to one month to pre-populate logs avoiding a cold start
@@ -145,14 +145,17 @@ check-coverage
 - Add frontend dashboard to display progress
 - Back up logs after every report
 - Add welcome email on first time setup
-- Add weekly, monthl summary emails
+- Add weekly, monthly summary emails
 - Add multiple time tracking sources (Toggle, spreadsheets etc)
-- Add welcome email
-- Add weekly summary
-- Explore multiple time tracking sources (toggl, spreadsheets etc)
 - Multiple goal tracking
 - Enhance insights: best day of the week, difference between days, weeks etc
 - Review deployment process
 - Marketing / documentation website
+
+#### Profile Snapshot design
+
+<div align="center">
+  <img src="https://github.com/cjjenkinson/masterykeeper/blob/master/profile_snapshot.png?raw=true" />
+</div>
 
 Cameron Jenkinson - camjenkinson@gmail.com
