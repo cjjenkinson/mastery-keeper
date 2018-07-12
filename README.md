@@ -94,6 +94,10 @@ check-coverage
 
 #### TODO
 
+- Add frontend profile dashboard
+- Add goal and account config in frontend
+- Move from lowdb to something more robust such as MongoDB / Postgres
+- First time setup with RescueTime be able to pull in past summaries up to one month to pre-populate logs avoiding a cold start
 - Refactor keeper.createReport
 - Refactor start & init
 - Add joi schema validation for logs
@@ -101,11 +105,12 @@ check-coverage
 - Configure email delivery time (via cron-job syntax)
 - Add worker stats / reports as server routes
 - Back up logs after every report
-- Add welcome email
-- Add weekly summary
-- Explore multiple time tracking sources (Toggle, spreadsheets etc)
+- Add welcome email on first time setup
+- Add weekly, monthl summary emails
+- Add multiple time tracking sources (Toggle, spreadsheets etc)
 - Multiple goal tracking
-- Enhance insights: best time, best month, difference between days, weeks etc
+- Enhance insights: best day of the week, difference between days, weeks etc
 - Review deployment process
+- Marketing / documentation website
 
 Cameron Jenkinson - camjenkinson@gmail.com
