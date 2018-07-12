@@ -1,11 +1,10 @@
 [![Build Status](https://travis-ci.org/cjjenkinson/masterykeeper.svg?branch=master)](https://travis-ci.org/cjjenkinson/masterykeeper)
 
 <div align="center">
-  <img src="https://github.com/cjjenkinson/masterykeeper/blob/develop/logo.png?raw=true" width="130px" />
+  <img src="https://github.com/cjjenkinson/masterykeeper/blob/develop/logo.png?raw=true" width="160px" />
   <h3>Mastery Keeper</h3>
+  <h5>Daily reports on your progress towards 10,000 hours of skill mastery 🎩</h5>
 </div>
-
-Daily reports on your progress towards 10,000 hours of skill mastery 🎩
 
 ### What is Mastery Keeper?
 
