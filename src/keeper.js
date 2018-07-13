@@ -50,6 +50,7 @@ class Keeper {
   async getDailySummary() {
     const url = `https://www.rescuetime.com/anapi/daily_summary_feed?key=${this.rescuetimeKey}`;
     const dailySummary = await axios.get(url);
+
     return dailySummary;
   }
 
@@ -63,13 +64,18 @@ class Keeper {
     };
   }
 
-  async addLog(logData) {
+  addLog({ logDate, hoursRaw }) {
+    const log = {
+      id: uuidv1(),
+      createdAt: Date.now(),
+      logDate,
+      hoursRaw,
+    };
+
     // Check for unique logs from date
-    const log = await db
-      .get('logs')
-      .push(logData)
-      .write()
-      .value();
+    db.get('logs')
+      .push(log)
+      .write();
 
     return log;
   }
@@ -84,10 +90,8 @@ class Keeper {
     }
 
     const logData = {
-      id: uuidv1(),
-      createdAt: Date.now(),
       logDate: logfromSummary.date,
-      hoursRaw: logfromSummary.software_development_hours,
+      hoursRaw: logfromSummary[this.rescuetimeCategory],
     };
 
     const log = await this.addLog(logData);
@@ -107,9 +111,9 @@ class Keeper {
       .value();
 
     const progressDifference = target - progress;
-    const updatedProgress = (progress + hoursRaw).toFixed(2);
+    const updatedProgress = progress + hoursRaw;
 
-    db.set('user.goal.progress', updatedProgress).write();
+    db.set('user.goal.progress', Number(updatedProgress)).write();
 
     const insightsRaw = {
       difference: {
