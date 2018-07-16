@@ -36,7 +36,7 @@ Then follow these three steps:
 
 1. Create a personal Rescue Time API key
 2. Define settings in now-secrets.json file
-3. Deploy with now
+3. Deployment
 
 #### 1. Rescue Time API Key
 
@@ -84,25 +84,9 @@ These are my settings with the Rescue Time token omitted.
 
 Keeper will throw a configuration error if you don't define all of the settings up-front.
 
-#### 3. Deploy with now
+#### 3. Deployment
 
-Once you've added your configuration opptions from the root of the directory run:
-
-```bash
-now
-```
-
-Once deployed copy the deployed URL and run the now scale command:
-
-```bash
-now scale https://my-app-replacethis.now.sh 1
-```
-
-This creates an instance that ensures the Cron Job will always execute.
-
-An important note:
-
-Since we’re forcing it to keep each instance alive you need to manually delete old instances after new deploys using the ```now rm``` command. You can see a list of all instances using ```now ls```.
+TBC.. undergoing updates
 
 ### Contributing
 
