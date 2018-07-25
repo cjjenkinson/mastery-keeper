@@ -4,7 +4,7 @@
   "description": "Daily reports on your progress towards 10,000 hours of skill mastery 🎩",
   "main": "build/main.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node build/main.js",
+    "start": "cross-env NODE_ENV=production node src/index.js",
     "dev": "cross-env NODE_ENV=development cross-env DEBUG=keeper* backpack",
     "send": "node src/send.js",
     "test": "jest 'tests'",
@@ -12,7 +12,6 @@
     "prebuild": "rimraf build",
     "build": "backpack build",
     "postbuild": "cp package.json build/package.json && cp .env build/.env && cp db.json build/db.json",
-    "deploy": "now",
     "lint": "eslint src/**"
   },
   "author": "Cameron Jenkinson",
