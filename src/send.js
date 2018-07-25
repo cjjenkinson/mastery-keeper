@@ -1,1 +1,13 @@
-console.log('Sending report via Heroku scheduled task...');
+import keeper from './index';
+
+const send = async () => {
+  try {
+    const info = await keeper.sendReport();
+    console.log(`Report sent: ${info.messageId}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+send();
+

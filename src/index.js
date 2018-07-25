@@ -45,3 +45,5 @@ app.listen(PORT, () => {
   console.log(`> Access your log data at http://localhost:${PORT}`);
   debug('Keeper started...');
 });
+
+module.exports = keeper;
