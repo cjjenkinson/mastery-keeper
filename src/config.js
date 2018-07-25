@@ -1,6 +1,6 @@
 import joi from 'joi';
 
-require('now-env');
+require('dotenv').config();
 
 const envVarsSchema = joi
   .object({

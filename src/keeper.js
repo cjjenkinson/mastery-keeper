@@ -7,11 +7,12 @@ import insights from './insights';
 import email from './email';
 
 const debug = require('debug')('keeper:worker');
-
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter = new FileSync('db.json');
+const dbPath = process.env.NODE_ENV !== 'production' ? './db.json' : './build/db.json';
+
+const adapter = new FileSync(dbPath);
 const db = low(adapter);
 
 class Keeper {
@@ -47,11 +48,17 @@ class Keeper {
     this.processDailyReport();
   }
 
-  async getDailySummary() {
+  async getDailySummaryLog() {
     const url = `https://www.rescuetime.com/anapi/daily_summary_feed?key=${this.rescuetimeKey}`;
     const dailySummary = await axios.get(url);
 
-    return dailySummary;
+    const logfromSummary = dailySummary.data[0];
+
+    if (!logfromSummary) {
+      throw new Error('Log data could not be retrieved, please check the Rescue Time service.');
+    }
+
+    return logfromSummary;
   }
 
   getUser() {
@@ -73,21 +80,22 @@ class Keeper {
     };
 
     // Check for unique logs from date
-    db.get('logs')
-      .push(log)
-      .write();
+    const logCheck = db
+      .get('logs')
+      .find({ logDate })
+      .value();
+
+    if (!logCheck) {
+      db.get('logs')
+        .push(log)
+        .write();
+    }
 
     return log;
   }
 
   async createReport() {
-    const dailySummary = await this.getDailySummary();
-
-    const logfromSummary = dailySummary.data[0];
-
-    if (!logfromSummary) {
-      throw new Error('Log data could not be retrieved, please check the Rescue Time service.');
-    }
+    const logfromSummary = await this.getDailySummaryLog();
 
     const logData = {
       logDate: logfromSummary.date,
@@ -121,7 +129,7 @@ class Keeper {
         current: hoursRaw,
       },
       completion: {
-        currentProgress: updatedProgress,
+        currentProgress: updatedProgress.toFixed(2),
         target,
         dailyAverage,
         progressDifference,
@@ -153,12 +161,12 @@ class Keeper {
       completionTimeYears: timeToCompletion.years,
     };
 
-    return reportData;
+    return Promise.resolve(reportData);
   }
 
   async sendReport() {
     const reportData = await this.createReport();
-    const html = await email.createHtmlTemplate(reportData);
+    const html = email.createHtmlTemplate(reportData);
 
     const mailOptions = {
       user: { email: this.user.email },
@@ -166,7 +174,8 @@ class Keeper {
       html,
     };
 
-    email.send(mailOptions);
+    const info = await email.send(mailOptions);
+    return Promise.resolve(info);
   }
 
   processDailyReport() {
@@ -178,10 +187,9 @@ class Keeper {
         * '10 6 * * *'
         */
         try {
-          await this.sendReport();
-          debug('> Report succesfully processed and sent');
+          const info = await this.sendReport();
           /* eslint-disable no-console */
-          console.log('> Report succesfully processed and sent');
+          console.log(`> Report succesfully processed and sent ${info.messageId}`);
         } catch (err) {
           /* eslint-disable no-console */
           console.error(`> Error in processing daily report: ${err.message}`);

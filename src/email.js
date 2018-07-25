@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-require('now-env');
+require('dotenv').config();
 const debug = require('debug')('keeper:email');
 
 const transporter = nodemailer.createTransport({
@@ -21,7 +21,7 @@ export default {
       html: options.html,
     };
 
-    transporter
+    const emailInfo = transporter
       .sendMail(mailOptions)
       .then((info) => {
         debug(`> Email sent: ${info.messageId}`);
@@ -30,6 +30,8 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+
+    return Promise.resolve(emailInfo);
   },
 
   createHtmlTemplate: (reportData) => {
