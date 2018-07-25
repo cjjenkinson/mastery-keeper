@@ -22,8 +22,6 @@ The daily progress report looks like this:
   <img src="https://github.com/cjjenkinson/masterykeeper/blob/master/report.png?raw=true" />
 </div>
 
-Check out my logs and progress here: https://masterykeeper-wshpiesdrp.now.sh
-
 ### How to deploy your own Keeper
 
 Clone the repo
@@ -40,7 +38,7 @@ Then follow these three steps:
 
 #### 1. Rescue Time API Key
 
-If you're already using Rescue Time access the API management console through this [link](https://www.rescuetime.com/anapi/manage). 
+If you're already using Rescue Time access the API management console through this [link](https://www.rescuetime.com/anapi/manage).
 
 Create an API key and name it Mastery Keeper when prompted.
 

@@ -3,7 +3,7 @@ import Router from 'koa-router';
 import Keeper from './keeper';
 import config from './config';
 
-require('now-env');
+require('dotenv').config();
 const debug = require('debug')('keeper');
 
 const app = new Koa();
@@ -26,9 +26,13 @@ const keeper = new Keeper({
   },
 });
 
-router.get('*', async (ctx, next) => {
+router.get('/', async (ctx) => {
   ctx.body = await keeper.getUser();
-  next();
+});
+
+router.get('/send', async (ctx) => {
+  const info = await keeper.sendReport();
+  ctx.body = { status: `Email sent: ${info.messageId}` };
 });
 
 app.use(router.routes());
@@ -38,6 +42,6 @@ app.listen(PORT, () => {
   keeper.start();
   /* eslint-disable no-console */
   console.log('✓ Keeper has started succesfully');
-  console.log('> Access your log data through the URL provided by now');
+  console.log(`> Access your log data at http://localhost:${PORT}`);
   debug('Keeper started...');
 });

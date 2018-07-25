@@ -1,0 +1,1 @@
+console.log('Sending report via Heroku scheduled task...');
